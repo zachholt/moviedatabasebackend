@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: WeatherAPI
+
+api:
+  weather:
+    host: https://weatherapi-com.p.rapidapi.com
+    weatherPath: /current.json
+    api-key: 99bd0833d9msh5f05d32423c7a4dp1fe286jsna11d6dc8a7cc

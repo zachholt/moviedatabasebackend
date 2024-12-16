@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/weather")
+@RequestMapping("/api/weather")
 public class WeatherController {
     private final WeatherService weatherService;
 
@@ -17,9 +17,15 @@ public class WeatherController {
         this.weatherService = weatherService;
     }
 
-    @GetMapping
+    @GetMapping("/v1/")
     public ResponseEntity<Weather> getWeather(@RequestParam("q") String zipcode) {
         Weather weather = weatherService.getWeather(zipcode);
+        return ResponseEntity.ok(weather);
+    }
+
+    @GetMapping("/v2/")
+    public ResponseEntity<Weather> getWeatherReactive(@RequestParam("q") String zipcode) {
+        Weather weather = weatherService.getWeatherWebClient(zipcode);
         return ResponseEntity.ok(weather);
     }
 } 
