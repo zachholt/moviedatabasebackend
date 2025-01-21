@@ -1,9 +1,9 @@
 spring:
   application:
-    name: WeatherAPI
+    name: MovieDatabaseAPI
 
 api:
-  weather:
-    host: https://weatherapi-com.p.rapidapi.com
-    weatherPath: /current.json
-    api-key: 99bd0833d9msh5f05d32423c7a4dp1fe286jsna11d6dc8a7cc
+  movie:
+    host: https://api.themoviedb.org
+    moviePath: /3/search/movie
+    api-key: 402a1dacfdfe0fca4d0b9bfe250cae7d
