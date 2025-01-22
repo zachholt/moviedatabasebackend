@@ -38,19 +38,19 @@ INSERT INTO actors (first_name, last_name, date_of_birth) VALUES
 
 INSERT INTO movies (movie_title, director_id, release_date, genre_id, rating_id, movie_length, trailer_url, external_id, overview) VALUES
     ('Jurassic Park', 1, '1993-06-11', 1, 3, 127, 'https://www.youtube.com/watch?v=QWBKEmWWL38', 329,
-    'During a preview tour, a theme park suffers a major power breakdown that allows its cloned dinosaur exhibits to run amok.'),
+    ''),
 
     ('The Departed', 2, '2006-10-06', 8, 4, 151, 'https://www.youtube.com/watch?v=iojhqm0JTW4', 1422,
-    'An undercover cop and a mole in the police attempt to identify each other while infiltrating an Irish gang in South Boston.'),
+    ''),
 
     ('Inception', 3, '2010-07-16', 5, 3, 148, 'https://www.youtube.com/watch?v=YoHD9XEInc0', 27205,
-    'A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.'),
+    ''),
 
     ('Pulp Fiction', 4, '1994-10-14', 8, 4, 154, 'https://www.youtube.com/watch?v=s7EdQ4FqbhY', 680,
-    'The lives of two mob hitmen, a boxer, a gangster and his wife, and a pair of diner bandits intertwine in four tales of violence and redemption.'),
+    ''),
 
     ('The Lord of the Rings', 5, '2001-12-19', 9, 3, 178, 'https://www.youtube.com/watch?v=V75dMMIW2B4', 120,
-    'A meek Hobbit from the Shire and eight companions set out on a journey to destroy the powerful One Ring and save Middle-earth from the Dark Lord Sauron.');
+    '');
 
 INSERT INTO movie_actors (movie_id, actor_id) VALUES
     (1, 1),  -- Tom Hanks in Jurassic Park
