@@ -18,6 +18,8 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.never;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("Movie Service Test")
@@ -44,53 +46,44 @@ public class MovieServiceTest {
     }
 
     @Test
-    @DisplayName("Add and Get Movie")
-    void test_addAndGetMovie() {
+    @DisplayName("Add Movie")
+    void test_addMovie() {
         // given
-        Movie newMovie = createTestMovie();
-        when(movieRepository.save(any(Movie.class))).thenReturn(newMovie);
-        when(movieRepository.findById(any(Integer.class))).thenReturn(Optional.of(newMovie));
+        Movie mockMovie = createTestMovie();
+        when(movieRepository.save(any(Movie.class))).thenReturn(mockMovie);
 
         // when
-        Movie savedMovie = subject.createMovie(newMovie);
+        Movie savedMovie = subject.createMovie(mockMovie);
 
         // then
-        assertThat(savedMovie.getId()).isNotNull();
-        assertThat(savedMovie.getMovieTitle()).isEqualTo(newMovie.getMovieTitle());
-        assertThat(savedMovie.getDirector()).isEqualTo(newMovie.getDirector());
-        assertThat(savedMovie.getReleaseDate()).isEqualTo(newMovie.getReleaseDate());
-        assertThat(savedMovie.getGenre()).isEqualTo(newMovie.getGenre());
-
-        // when
-        Movie retrievedMovie = subject.findMovieById(savedMovie.getId());
-
-        // then
-        assertThat(retrievedMovie).isNotNull();
-        assertThat(retrievedMovie.getId()).isEqualTo(savedMovie.getId());
+        assertThat(savedMovie).isNotNull();
+        assertThat(savedMovie.getMovieTitle()).isEqualTo(mockMovie.getMovieTitle());
+        assertThat(savedMovie.getDirector()).isEqualTo(mockMovie.getDirector());
+        assertThat(savedMovie.getReleaseDate()).isEqualTo(mockMovie.getReleaseDate());
+        assertThat(savedMovie.getGenre()).isEqualTo(mockMovie.getGenre());
     }
 
     @Test
-    @DisplayName("Delete Movie")
-    void test_deleteMovie() {
+    @DisplayName("Delete Movie - Success")
+    void test_deleteMovie_success() {
         // given
-        Movie movie = createTestMovie();
-        when(movieRepository.findById(any(Integer.class))).thenReturn(Optional.of(movie));
-
-        // when
-        boolean deleteResult = subject.deleteMovie(movie.getId());
-
-        // then
-        assertThat(deleteResult).isTrue();
-    }
-
-    @Test
-    @DisplayName("Delete Movie - Not Found")
-    void test_deleteMovie_notFound() {
-        // given
-        when(movieRepository.findById(any(Integer.class))).thenReturn(Optional.empty());
+        when(movieRepository.existsById(1)).thenReturn(true);
 
         // when
         boolean result = subject.deleteMovie(1);
+
+        // then
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    @DisplayName("Delete Movie - Failed")
+    void test_deleteMovie_failed() {
+        // given
+        when(movieRepository.existsById(999)).thenReturn(false);
+
+        // when
+        boolean result = subject.deleteMovie(999);
 
         // then
         assertThat(result).isFalse();

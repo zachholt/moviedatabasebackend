@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
 public class GenreServiceTest {
 
     @Mock
-    private GenreRepository genreRepository;
+    GenreRepository genreRepository;
 
     @InjectMocks
     private GenreService subject;
@@ -28,15 +28,32 @@ public class GenreServiceTest {
     @Test
     @DisplayName("Get All Genres - Empty List")
     void test_getAllGenres_empty() {
-        // given
+        //given
         when(genreRepository.findAll()).thenReturn(new ArrayList<>());
 
-        // when
+        //when
         List<Genre> result = subject.findAllGenres();
 
-        // then
+        //then
         assertThat(result).isNotNull();
         assertThat(result).isEmpty();
+    }
+
+    @Test
+    @DisplayName("Get All Genres - With Data")
+    void test_getAllGenres_withData() {
+        //given
+        List<Genre> mockGenres = new ArrayList<>();
+        mockGenres.add(createTestGenre());
+        when(genreRepository.findAll()).thenReturn(mockGenres);
+
+        //when
+        List<Genre> result = subject.findAllGenres();
+
+        //then
+        assertThat(result).isNotNull();
+        assertThat(result).hasSize(1);
+        assertThat(result.get(0).getGenre()).isEqualTo("Action");
     }
 
     private Genre createTestGenre() {
