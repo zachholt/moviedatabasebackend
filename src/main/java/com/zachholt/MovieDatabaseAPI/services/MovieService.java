@@ -41,15 +41,9 @@ public class MovieService {
     }
 
     public Movie createMovie(Movie movie) {
-        try {
-            movie.setId(null);
-            System.out.println("Creating movie in service: " + movie.getMovieTitle());
-            return movieRepository.save(movie);
-        } catch (Exception e) {
-            System.err.println("Error in createMovie: " + e.getMessage());
-            e.printStackTrace();
-            throw e;
-        }
+        movie.setId(null);
+        System.out.println("Creating movie in service: " + movie.getMovieTitle());
+        return movieRepository.save(movie);
     }
 
     public boolean deleteMovie(Integer id) {

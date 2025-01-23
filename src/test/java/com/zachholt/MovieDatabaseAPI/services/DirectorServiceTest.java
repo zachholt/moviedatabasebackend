@@ -15,9 +15,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("Director Service Test")
@@ -28,6 +26,47 @@ public class DirectorServiceTest {
 
     @InjectMocks
     private DirectorService subject;
+
+    @Test
+    @DisplayName("Find Director By Id - Success")
+    void test_findDirectorById_success() {
+        // given
+        Director mockDirector = createTestDirector();
+        when(directorRepository.findById(1)).thenReturn(Optional.of(mockDirector));
+
+        // when
+        Director result = subject.findDirectorById(1);
+
+        // then
+        assertThat(result).isNotNull();
+        assertThat(result.getId()).isEqualTo(1);
+        assertThat(result.getFirstName()).isEqualTo("Steven");
+        assertThat(result.getLastName()).isEqualTo("Spielberg");
+        assertThat(result.getDateOfBirth()).isEqualTo("1946-12-18");
+    }
+
+    @Test
+    @DisplayName("Find Director By Id - Not Found")
+    void test_findDirectorById_notFound() {
+        // given
+        when(directorRepository.findById(999)).thenReturn(Optional.empty());
+
+        // when
+        Director result = subject.findDirectorById(999);
+
+        // then
+        assertThat(result).isNull();
+    }
+
+    @Test
+    @DisplayName("Find Director By Id - Null Id")
+    void test_findDirectorById_nullId() {
+        // when
+        Director result = subject.findDirectorById(null);
+
+        // then
+        assertThat(result).isNull();
+    }
 
     @Test
     @DisplayName("Get All Directors - Empty List")
@@ -59,7 +98,7 @@ public class DirectorServiceTest {
         assertThat(savedDirector.getLastName()).isEqualTo(mockDirector.getLastName());
     }
 
- //   @Test
+    @Test
     @DisplayName("Update Director")
     void test_updateDirector() {
         // given
@@ -68,8 +107,9 @@ public class DirectorServiceTest {
         updateRequest.setId(1);
         updateRequest.setFirstName("Martin");
         updateRequest.setLastName("Scorsese");
+        updateRequest.setDateOfBirth("1942-11-17");
         
-        when(directorRepository.findById(1)).thenReturn(Optional.of(mockDirector));
+        when(directorRepository.existsById(1)).thenReturn(true);
         when(directorRepository.save(any(Director.class))).thenReturn(updateRequest);
 
         // when
@@ -79,6 +119,20 @@ public class DirectorServiceTest {
         assertThat(updatedDirector).isNotNull();
         assertThat(updatedDirector.getFirstName()).isEqualTo("Martin");
         assertThat(updatedDirector.getLastName()).isEqualTo("Scorsese");
+    }
+
+    @Test
+    @DisplayName("Update Director - Not Found")
+    void test_updateDirector_notFound() {
+        // given
+        Director updateRequest = createTestDirector();
+        when(directorRepository.existsById(1)).thenReturn(false);
+
+        // when
+        Director result = subject.updateDirector(updateRequest);
+
+        // then
+        assertThat(result).isNull();
     }
 
     @Test
@@ -112,6 +166,7 @@ public class DirectorServiceTest {
         director.setId(1);
         director.setFirstName("Steven");
         director.setLastName("Spielberg");
+        director.setDateOfBirth("1946-12-18");
         return director;
     }
 } 

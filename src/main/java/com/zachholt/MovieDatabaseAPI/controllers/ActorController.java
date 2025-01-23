@@ -89,9 +89,9 @@ public class ActorController {
             }
     )
     public ResponseEntity<Actor> createActor(@RequestBody Actor actor) {
-            System.out.println("Received actor data: " + actor.getFirstName() + " " + actor.getLastName());
-            Actor createdActor = actorService.createActor(actor);
-            return new ResponseEntity<>(createdActor, HttpStatus.CREATED);
+        System.out.println("Received actor data: " + actor.getFirstName() + " " + actor.getLastName());
+        Actor createdActor = actorService.createActor(actor);
+        return new ResponseEntity<>(createdActor, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")

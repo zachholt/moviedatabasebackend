@@ -89,15 +89,9 @@ public class DirectorController {
             }
     )
     public ResponseEntity<Director> createDirector(@RequestBody Director director) {
-        try {
-            System.out.println("Received director data: " + director.getFirstName() + " " + director.getLastName());
-            Director createdDirector = directorService.createDirector(director);
-            return new ResponseEntity<>(createdDirector, HttpStatus.CREATED);
-        } catch (Exception e) {
-            System.err.println("Error creating director: " + e.getMessage());
-            e.printStackTrace();
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        System.out.println("Received director data: " + director.getFirstName() + " " + director.getLastName());
+        Director createdDirector = directorService.createDirector(director);
+        return new ResponseEntity<>(createdDirector, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")

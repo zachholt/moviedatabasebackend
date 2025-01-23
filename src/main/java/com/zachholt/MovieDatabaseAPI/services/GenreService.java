@@ -15,33 +15,6 @@ public class GenreService {
         this.genreRepository = genreRepository;
     }
 
-//    @PostConstruct
-//    public void initializeGenres() {
-//        if (genreRepository.count() == 0) {
-//            List<Genre> standardGenres = Arrays.asList(
-//                createGenre(1, "Action", "Action movies"),
-//                createGenre(2, "Adventure", "Adventure movies"),
-//                createGenre(3, "Comedy", "Comedy movies"),
-//                createGenre(4, "Drama", "Drama movies"),
-//                createGenre(5, "Fantasy", "Fantasy movies"),
-//                createGenre(6, "Horror", "Horror movies"),
-//                createGenre(7, "Mystery", "Mystery movies"),
-//                createGenre(8, "Romance", "Romance movies"),
-//                createGenre(9, "Science Fiction", "Science Fiction movies"),
-//                createGenre(10, "Thriller", "Thriller movies")
-//            );
-//            genreRepository.saveAll(standardGenres);
-//        }
-//    }
-
-    private Genre createGenre(Integer id, String name, String description) {
-        Genre genre = new Genre();
-        genre.setId(id)
-            .setGenre(name)
-            .setDescription(description);
-        return genre;
-    }
-
     public List<Genre> findAllGenres() {
         return genreRepository.findAll();
     }
